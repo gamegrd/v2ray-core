@@ -61,7 +61,7 @@ copyconf() {
 }
 
 packzip() {
-	echo ">>> Generating zip package"
+	echo ">>> Generating zip package $TMP"
 	cd "$TMP"
 	local PKG=${SRCDIR}/v2ray-custom-${GOARCH}-${GOOS}-${PKGSUFFIX}${NOW}.zip
 	zip -r "$PKG" .
