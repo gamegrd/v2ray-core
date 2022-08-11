@@ -10,3 +10,5 @@ windows:
 osx:
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0   go build -o v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 
+auto:
+	./user-package.sh linux 386 nosource noconf codename=happyday
