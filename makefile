@@ -16,6 +16,10 @@ osx:
 	mkdir -p $(build)
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0   go build -o $(build)/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 
+android:
+	mkdir -p $(build)
+	GOOS=linux GOARCH=arm  CGO_ENABLED=0   go build -o $(build)/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
+
 auto:
 	mkdir -p $(build)
 	./user-package.sh linux 386 nosource noconf codename=happyday
