@@ -7,7 +7,6 @@ import (
 
 	core "github.com/v2fly/v2ray-core/v5"
 	"github.com/v2fly/v2ray-core/v5/common"
-	"github.com/v2fly/v2ray-core/v5/common/net"
 	"github.com/v2fly/v2ray-core/v5/common/platform"
 	"github.com/v2fly/v2ray-core/v5/features/dns"
 	"github.com/v2fly/v2ray-core/v5/features/outbound"
@@ -220,7 +219,6 @@ func init() {
 					if err != nil {
 						return nil, newError("unable to load geodomain").Base(err)
 					}
-					rule.Domain = append(rule.Domain, geo.Domain...)
 				}
 			}
 			if v.PortList != "" {
@@ -240,9 +238,8 @@ func init() {
 				rule.SourcePortList = portList.Build()
 			}
 			rule.Domain = v.Domain
-			if v.Networks != "" {
-				rule.Networks = net.ParseNetworks(v.Networks)
-			}
+			rule.GeoDomain = v.GeoDomain
+			rule.Networks = v.Networks.GetNetwork()
 			rule.Protocol = v.Protocol
 			rule.Attributes = v.Attributes
 			rule.UserEmail = v.UserEmail
