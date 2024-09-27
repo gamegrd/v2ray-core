@@ -1,4 +1,5 @@
 build = $(shell pwd)/build
+all:openwrt android linux android windows
 
 openwrt:
 	mkdir -p $(build)/openwrt
@@ -18,11 +19,11 @@ windows:
 
 osx:
 	mkdir -p $(build)
-	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0   go build -o $(build)/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
+	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0   go build -o $(build)/osx/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 
 android:
 	mkdir -p $(build)
-	GOOS=linux GOARCH=arm  CGO_ENABLED=0   go build -o $(build)/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
+	GOOS=linux GOARCH=arm  CGO_ENABLED=0   go build -o $(build)/android/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 
 auto:
 	mkdir -p $(build)
