@@ -28,3 +28,5 @@ errorgen
 *.dat
 .vscode/
 build/
+*~
+[._]*.un~
