@@ -23,6 +23,8 @@ type trackedSubscription struct {
 	originalDocument     []byte
 	originalContainer    *containers.Container
 	originalServerConfig map[string]*originalServerConfig
+
+	addedByAPI bool
 }
 
 type originalServerConfig struct {
@@ -75,4 +77,23 @@ type materializedServer struct {
 	tagPostfix string
 
 	serverConfig *specs.SubscriptionServerConfig
+}
+
+func (s *trackedSubscription) fillStatus(status *subscription.TrackedSubscriptionStatus) error { //nolint: unparam
+	status.ImportSource = s.importSource
+	if s.currentDocument == nil {
+		return nil
+	}
+	status.DocumentMetadata = s.currentDocument.Metadata
+	status.Servers = make(map[string]*subscription.SubscriptionServer)
+	for _, v := range s.currentDocument.Server {
+		status.Servers[v.Id] = &subscription.SubscriptionServer{
+			ServerMetadata: v.Metadata,
+		}
+		if materializedInstance, ok := s.materialized[v.Id]; ok {
+			status.Servers[v.Id].Tag = materializedInstance.tagPostfix
+		}
+	}
+	status.AddedByApi = s.addedByAPI
+	return nil
 }
