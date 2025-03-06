@@ -5,6 +5,7 @@ all:openwrt android linux android windows
 openwrt:
 	mkdir -p $(build)/openwrt
 	GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_ENABLED=0   go build -o $(build)/openwrt/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
+	upx -1 $(build)/openwrt/v2ray
 
 linux:
 	mkdir -p $(build)/linux
